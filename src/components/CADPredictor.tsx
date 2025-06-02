@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -45,7 +44,7 @@ const CADPredictor = () => {
   });
 
   const [errors, setErrors] = useState<string[]>([]);
-  const [result, setResult] = useState<{probability: number; hasCAD: boolean} | null>(null);
+  const [result, setResult] = useState<{hasCAD: boolean} | null>(null);
 
   const validateForm = (): boolean => {
     const newErrors: string[] = [];
@@ -116,11 +115,11 @@ const CADPredictor = () => {
     if (formData.thal === "2") riskScore += 0.15; // Reversible defect
     else if (formData.thal === "1") riskScore += 0.08; // Fixed defect
 
-    // Cap at 95% and add some randomness for realism
+    // Determine binary classification
     const probability = Math.min(95, Math.max(5, (riskScore * 100) + (Math.random() * 10 - 5)));
     const hasCAD = probability > 50;
 
-    setResult({ probability: Math.round(probability), hasCAD });
+    setResult({ hasCAD });
   };
 
   const resetForm = () => {
@@ -185,12 +184,9 @@ const CADPredictor = () => {
                         <CheckCircle className="h-12 w-12 text-green-600" />
                       )}
                     </div>
-                    <h3 className={`text-2xl font-bold mb-2 ${result.hasCAD ? 'text-red-700' : 'text-green-700'}`}>
+                    <h3 className={`text-2xl font-bold mb-4 ${result.hasCAD ? 'text-red-700' : 'text-green-700'}`}>
                       Presence of CAD: {result.hasCAD ? 'Yes' : 'No'}
                     </h3>
-                    <p className={`text-lg mb-4 ${result.hasCAD ? 'text-red-600' : 'text-green-600'}`}>
-                      Predicted Probability: {result.probability}%
-                    </p>
                     <p className={`${result.hasCAD ? 'text-red-700' : 'text-green-700'}`}>
                       {result.hasCAD 
                         ? "We recommend you see a cardiologist for further evaluation." 
