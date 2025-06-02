@@ -352,7 +352,7 @@ const CADPredictor = () => {
                       </Select>
                     </div>
                     <div>
-                      <Label htmlFor="fbs">Fasting Blood Sugar > 120 mg/dl</Label>
+                      <Label htmlFor="fbs">Fasting Blood Sugar &gt; 120 mg/dl</Label>
                       <Select value={formData.fbs} onValueChange={(value) => setFormData({...formData, fbs: value})}>
                         <SelectTrigger className="mt-2">
                           <SelectValue placeholder="Select" />
